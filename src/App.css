@@ -1,0 +1,56 @@
+/* Add this CSS to your project, for example, in a separate CSS file */
+.navbar {
+  background-color: #10673E !important;
+  display: flex;
+  align-items: center;
+}
+
+/* Add this CSS to your project, for example, in a separate CSS file */
+.custom-left-align {
+  display: flex;
+  align-items: center;
+}
+
+.allign {
+  margin-left: 0% !important;
+}
+
+.logo {
+  margin-top: 5px;
+}
+
+.b {
+  margin-bottom: 5px;
+  margin-left: 40px;
+
+}
+
+/* Media query for screens with a maximum width of 991px */
+@media (max-width: 991px) {
+  .centermenu {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    /* Center align items horizontally */
+    /* Center align items horizontally */
+  }
+}
+
+.dash {
+  width: 800px;
+  height: auto;
+}
+
+/*  dd this CSS to your project, for example, in a separate CSS file */
+.navbar-nav li {
+  border-right: 1px solid white;
+  /* Add a white border to the right of each list item */
+  padding-right: 10px;
+  /* Add some spacing between the border and the text */
+
+}
+
+/* Style the last list item to remove the border */
+.navbar-nav li:last-child {
+  border-right: none;
+  /* Remove the border on the last list item */
+}
