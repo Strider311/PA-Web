@@ -75,6 +75,8 @@ const itemData = [
 
 const Session: React.FC = () => {
   return (
+    <div>
+      <h1>Sessions</h1>
     <Grid
       container
       spacing={2}
@@ -101,6 +103,7 @@ const Session: React.FC = () => {
         </Card>
       ))}
     </Grid>
+    </div>
   );
 };
 

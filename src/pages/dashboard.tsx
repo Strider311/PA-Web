@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 const dash: React.FC = () => (
+  <div>
+  <h1>Plant Care Overview </h1>
   <Card sx={{ maxWidth: 500, margin: 5 }}>
     <CardMedia
       sx={{ height: 500, width: 500 }}
@@ -25,6 +27,7 @@ const dash: React.FC = () => (
       <Button size="small">MSAVI2</Button>
     </CardActions>
   </Card>
+  </div>
 );
 
 export default dash;
