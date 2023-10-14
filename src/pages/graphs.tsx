@@ -4,7 +4,7 @@ import { Grid, Typography } from '@mui/material';
 import { LineChart, Line, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'; // Import the LineChart components
 
 const chartData = [
-  { name: 'Jan', value: 100, value2: 50 }, // Add a new series (value2) for the LineChart
+  { name: 'Jan', value: 100, value2: 50 }, 
   { name: 'Feb', value: 200, value2: 100 },
   { name: 'Mar', value: 150, value2: 75 },
 ];
