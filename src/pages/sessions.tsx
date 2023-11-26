@@ -1,83 +1,34 @@
 // src/pages/Page2.tsx
-import * as React from "react";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
-import { Container, Grid } from "@mui/material";
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-} from "@material-ui/core";
+import * as React from 'react';
+import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
 
-// require("../images/dash.png");
+interface Session {
+  img: string;
+  title: string;
+  author: string;
+}
 
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Session 1",
-    author: "Date: 1/1/2023",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Session 2",
-    author: "Date: 10/1/2023",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Session 3",
-    author: "Date: 30/1/2023",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Session 4",
-    author: "Date: 12/2/2023",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Session 4",
-    author: "Date: 12/2/2023",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Session 4",
-    author: "Date: 12/2/2023",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Session 4",
-    author: "Date: 12/2/2023",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Session 4",
-    author: "Date: 12/2/2023",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Session 4",
-    author: "Date: 12/2/2023",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Session 4",
-    author: "Date: 12/2/2023",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Session 4",
-    author: "Date: 12/2/2023",
-  },
-];
+const App: React.FC = () => {
+  const [sessions, setSessions] = React.useState<Session[]>([]);
 
-const Session: React.FC = () => {
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/data');
+        const data = await response.json();
+        setSessions(data.sessions);
+      } catch (error) {
+        console.error('Error fetching sessions:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div>
       <h1>Sessions</h1>
-    <Grid
+      <Grid
       container
       spacing={2}
       style={{
@@ -87,8 +38,8 @@ const Session: React.FC = () => {
         margin: 10,
       }}
     >
-      {itemData.map((item) => (
-        <Card style={{ margin: 10, maxWidth: 400 }}>
+      {sessions.map((item, index) => (
+        <Card key={index} style={{ margin: 10, maxWidth: 400 }}>
           <CardMedia component="img" image={item.img} title="Session Image" />
 
           <CardContent>
@@ -102,9 +53,9 @@ const Session: React.FC = () => {
           </CardActions>
         </Card>
       ))}
-    </Grid>
+      </Grid>
     </div>
   );
 };
 
-export default Session;
+export default App;

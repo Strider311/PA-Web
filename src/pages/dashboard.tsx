@@ -1,33 +1,52 @@
 import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 
-const dash: React.FC = () => (
-  <div>
-  <h1>Plant Care Overview </h1>
-  <Card sx={{ maxWidth: 500, margin: 5 }}>
-    <CardMedia
-      sx={{ height: 500, width: 500 }}
-      image={require("../images/dash.png")}
-      title="Current Image"
-    />
-    <CardContent>
-      <Typography gutterBottom variant="h5" component="div">
-        Latest Image
-      </Typography>
-    </CardContent>
-    <CardActions>
-      <Button size="small">NDVI</Button>
-      <Button size="small">NDWI</Button>
-      <Button size="small">NDRI</Button>
-      <Button size="small">MSAVI2</Button>
-    </CardActions>
-  </Card>
-  </div>
-);
+interface PlantCareOverview {
+  imageUrl: string;
+}
 
-export default dash;
+const Dash: React.FC = () => {
+  const [plantCareOverview, setPlantCareOverview] = React.useState<PlantCareOverview | null>(null);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/data');
+        const data = await response.json();
+        setPlantCareOverview(data.plantCareOverview);
+      } catch (error) {
+        console.error('Error fetching plant care overview:', error);
+      }
+    };    
+
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      <Typography variant="h1">Plant Care Overview</Typography>
+      <Card sx={{ maxWidth: 500, margin: 5 }}>
+        {plantCareOverview && (
+          <CardMedia
+            sx={{ height: 500, width: 500 }}
+            image={`./images/${plantCareOverview.imageUrl}`}
+            title="Current Image"
+          />
+        )}
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            Latest Image
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small">NDVI</Button>
+          <Button size="small">NDWI</Button>
+          <Button size="small">NDRI</Button>
+          <Button size="small">MSAVI2</Button>
+        </CardActions>
+      </Card>
+    </div>
+  );
+};
+
+export default Dash;
