@@ -1,27 +1,37 @@
 // src/pages/Page2.tsx
-import * as React from 'react';
-import { Button, Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@material-ui/core';
+import * as React from "react";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  Typography,
+} from "@material-ui/core";
+import { Button } from "@mui/material";
+import { Link, Route, Router } from "react-router-dom";
+import DetailsPage from "./details";
 
 interface Session {
-  img: string;
-  title: string;
-  author: string;
+  sessionName: string;
+  dateCreated: string;
+  noOfImages: number;
+  id: string;
 }
 
-const App: React.FC = () => {
+const Sessions: React.FC = () => {
   const [sessions, setSessions] = React.useState<Session[]>([]);
 
-  React.useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/api/data');
-        const data = await response.json();
-        setSessions(data.sessions);
-      } catch (error) {
-        console.error('Error fetching sessions:', error);
-      }
-    };
+  const fetchData = React.useCallback(() => {
+    try {
+      const response = fetch("http://localhost:5115/api/sessions")
+        .then((response) => response.json())
+        .then((data) => setSessions(data));
+    } catch (error) {
+      console.error("Error fetching sessions:", error);
+    }
+  }, []);
 
+  React.useEffect(() => {
     fetchData();
   }, []);
 
@@ -29,33 +39,47 @@ const App: React.FC = () => {
     <div>
       <h1>Sessions</h1>
       <Grid
-      container
-      spacing={2}
-      style={{
-        display: "flex",
-        alignContent: "center",
-        alignItems: "center",
-        margin: 10,
-      }}
-    >
-      {sessions.map((item, index) => (
-        <Card key={index} style={{ margin: 10, maxWidth: 400 }}>
-          <CardMedia component="img" image={item.img} title="Session Image" />
-
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {item.title}
-            </Typography>
-            <Typography>{item.author}</Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Open details</Button>
-          </CardActions>
-        </Card>
-      ))}
+        container
+        spacing={2}
+        style={{
+          display: "flex",
+          alignContent: "center",
+          alignItems: "center",
+          margin: 10,
+        }}
+      >
+        {sessions
+          ? sessions.map((item, index) => {
+              return (
+                <Card key={index} style={{ margin: 10, maxWidth: 400 }}>
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {item.sessionName}
+                    </Typography>
+                  </CardContent>
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="div">
+                      Number of images: {item.noOfImages}
+                    </Typography>
+                  </CardContent>
+                  <CardContent>
+                    <Typography gutterBottom variant="h6" component="div">
+                      Date created: {item.dateCreated}
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button variant="contained" href={`/details/${item.id}`}>
+                      Open Details
+                    </Button>
+                  </CardActions>
+                </Card>
+              );
+            })
+          : "No sessions"}
       </Grid>
     </div>
+    // </div>
   );
 };
 
-export default App;
+export default Sessions;
